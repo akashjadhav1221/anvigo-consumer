@@ -1,0 +1,46 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title color="fullWhite">About Us</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid style="height: 100%" ion-fixed>
+    <ion-row justify-content-center align-items-center style="height: 100%;" text-center>
+      <div>
+        <ion-img height="150" width="150" src="assets/imgs/alienart.png"></ion-img>
+        <ion-label>
+          Designed and developed by
+        </ion-label>
+        <ion-label style="font-size: 2em !important;">
+          ALIEN ART
+        </ion-label>
+        <ion-label>
+          Think Digital
+        </ion-label>
+
+        <button ion-button clear icon-only (click)="web()">
+          <ion-icon name="globe"></ion-icon>
+        </button>
+        <button ion-button clear icon-only (click)="mail()">
+          <ion-icon name="mail"></ion-icon>
+        </button>
+        <button ion-button clear icon-only (click)="facebook()">
+          <ion-icon name="logo-facebook"></ion-icon>
+        </button>
+        <button ion-button clear icon-only (click)="instagram()">
+          <ion-icon name="logo-instagram"></ion-icon>
+        </button>
+        <button ion-button clear icon-only (click)="twitter()">
+          <ion-icon name="logo-twitter"></ion-icon>
+        </button>
+        <button ion-button clear icon-only (click)="linkedIn()">
+          <ion-icon name="logo-linkedin"></ion-icon>
+        </button>
+      </div>
+    </ion-row>
+  </ion-grid>
+</ion-content>

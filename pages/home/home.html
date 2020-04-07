@@ -1,0 +1,151 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title color="fullWhite">
+      <strong>
+       Anvigo
+      </strong>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="fullWhite" (click)="openAccountPage()">
+        <ion-icon name="contact"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+  <!-- <ion-card style="margin-top: -1vh !important; background-color: #a31545;">
+    <ion-grid>
+      <ion-row style="margin-bottom: -2vh !important;" (click)="openAccountPage()">
+            <ion-col col-1>
+              <div style="text-align: left;">
+                  <button ion-button clear class="account-icon-btn" icon-only>
+                      <ion-icon name="contact" style="font-size: 3em !important; margin-left: -3.5vw !important;"></ion-icon>
+                  </button>
+              </div>
+               
+              </ion-col>
+              <ion-col col-11>
+          <ion-card-header class="greeting-title">
+            <ng-container *ngIf="userProvider.user">
+                Hi {{userProvider.user.displayName}}
+            </ng-container>
+            <ng-container *ngIf="!userProvider.user">
+                Hi
+            </ng-container>
+          </ion-card-header>
+          <ion-card-content class="greeting-content">
+            Find stores and offers near you!
+          </ion-card-content>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+  </ion-card> -->
+  <ion-slides style="height: 20vh !important;">
+
+    <ion-slide style="background-color: black">
+      <img src="../../assets/imgs/banner.jpg" style="width: 100vw;" />
+    </ion-slide>
+
+  </ion-slides>
+  <ion-grid>
+    <ion-list>
+      <ion-row>
+        <ion-card class="action-card" text-wrap (click)="orderMonthlyGrocery()">
+          <ion-grid>
+            <ion-row>
+              <ion-col col-1>
+                <div style="text-align: center;">
+                  <ion-icon ios="ios-cart" md="md-cart" class="action-icon"></ion-icon>
+                </div>
+              </ion-col>
+              <ion-col>
+                <ion-card-header class="card-title">
+                  Order Monthly Groceries
+                </ion-card-header>
+                <ion-card-content>
+                  From your favourite grocery store
+                </ion-card-content>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-row>
+      <ion-row>
+        <ion-card class="action-card" text-wrap (click)="showOffersPage()">
+          <ion-grid>
+            <ion-row>
+              <ion-col col-1>
+                <div style="text-align: center;">
+                  <ion-icon ios="ios-flash" md="md-flash" class="action-icon"></ion-icon>
+                </div>
+              </ion-col>
+              <ion-col>
+                <ion-card-header class="card-title">
+                  Offers Nearby
+                </ion-card-header>
+                <ion-card-content>
+                  Find exciting offers from local stores
+                </ion-card-content>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card>
+      </ion-row>
+    </ion-list>
+  </ion-grid>
+
+  <ion-item style="margin-top: -15px !important;">
+    <ion-icon name="time" class="bottom-div-icons"></ion-icon>
+    <ion-label class="recent-orders-text">
+      Recent Orders
+    </ion-label>
+  </ion-item>
+
+  <ng-container *ngIf="ordersProvider.myOrders && ordersProvider.myOrders.length">
+    <ion-list>
+      <ion-item *ngIf="ordersProvider.myOrders[0]" (click)="showOrderDetails(ordersProvider.myOrders[0])">
+        <!-- <ion-avatar item-start>
+              <img src="img/avatar-cher.png">
+            </ion-avatar> -->
+        <h2 *ngIf="ordersProvider.myOrders[0].business.name" style="color: #a31545; font-size: 1em;">{{ordersProvider.myOrders[0].business.name}}</h2>
+        <p *ngIf="ordersProvider.myOrders[0].state" style="color: gray; font-size: 0.8em;">
+          {{commonProvider.getOrderState(ordersProvider.myOrders[0].state)}}
+        </p>
+      </ion-item>
+      <ion-item *ngIf="ordersProvider.myOrders[1]" (click)="showOrderDetails(ordersProvider.myOrders[1])">
+        <!-- <ion-avatar item-start>
+                <img src="img/avatar-cher.png">
+              </ion-avatar> -->
+        <h2 *ngIf="ordersProvider.myOrders[1].business.name" style="color: #a31545; font-size: 1em;">{{ordersProvider.myOrders[1].business.name}}</h2>
+        <p *ngIf="ordersProvider.myOrders[1].state" style="color: gray; font-size: 0.8em;">
+          {{commonProvider.getOrderState(ordersProvider.myOrders[1].state)}}
+        </p>
+      </ion-item>
+    </ion-list>
+    <div text-center *ngIf="ordersProvider.myOrders[1]">
+      <button ion-button clear class="all-orders-btn" icon-start (click)="showOrdersPage()">
+        <ion-icon name="list-box"></ion-icon>
+        All Orders
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="ordersProvider.myOrders && !ordersProvider.myOrders.length">
+    <div class="spinner-div">
+      <ion-spinner name="crescent" *ngIf="showSpinner && !ordersProvider.callCompleted && !ordersProvider.error">
+      </ion-spinner>
+      <ion-label class="recent-orders-text" *ngIf="showSpinner && ordersProvider.callCompleted && !ordersProvider.error">
+        No recent orders.
+      </ion-label>
+      <ion-label class="recent-orders-text" *ngIf="showSpinner && ordersProvider.callCompleted && ordersProvider.error">
+        Something went wrong. Try again later.
+      </ion-label>
+    </div>
+  </ng-container>
+
+
+</ion-content>

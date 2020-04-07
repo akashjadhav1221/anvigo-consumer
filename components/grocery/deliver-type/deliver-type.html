@@ -1,0 +1,78 @@
+<ion-content>
+    <ng-container *ngIf="!isOrderPosted">
+        <ion-card>
+            <ion-card-header>
+                <div style="margin-left: 15px; white-space: normal;">
+                    <span calss="fulfill-text">Order to <span class="store-name-text">{{selectedStore.name}},
+                            {{selectedStore.address}}</span></span>
+                </div>
+
+            </ion-card-header>
+        </ion-card>
+        <ion-card>
+            <ion-card-content>
+                <ion-list radio-group [(ngModel)]="deliveryMethod" (ionChange)="deliveryMethodChanged($event)">
+                    <ion-item *ngIf="selectedStore.deliveryMethod.selfPickup">
+                        <ion-label>Self Pickup</ion-label>
+                        <ion-radio [disabled]="disableUI" value="selfPickup"></ion-radio>
+                    </ion-item>
+                    <ion-item *ngIf="selectedStore.deliveryMethod.homeDelivery">
+                        <ion-label>Home Delivery</ion-label>
+                        <ion-radio [disabled]="disableUI" value="homeDelivery"></ion-radio>
+                    </ion-item>
+                </ion-list>
+            </ion-card-content>
+        </ion-card>
+        <ion-card *ngIf="deliveryMethod.length > 0">
+            <ion-card-content>
+                <ion-item>
+                    <ion-label color="primary" stacked>Mobile Number</ion-label>
+                    <ion-input [disabled]="disableUI" placeholder="Your mobile number here" [(ngModel)]="userProvider.userDoc.phoneNumber"></ion-input>
+                </ion-item>
+                <ion-item *ngIf="deliveryMethod === 'homeDelivery'">
+                    <ion-label color="primary" stacked placeholder="address">Address</ion-label>
+                    <ion-textarea [disabled]="disableUI" placeholder="Your address here" [(ngModel)]="userProvider.userDoc.address"></ion-textarea>
+                </ion-item>
+            </ion-card-content>
+        </ion-card>
+        <div class="btn-div">
+            <!-- <h5 class="fulfill-text">Fulfilled by</h5>
+                    <h5 class="store-name-text">{{selectedStore.name}} , {{selectedStore.area}}</h5> -->
+            <div>
+                <button ion-button round (click)="editOrder()" [disabled]="disableUI">
+                    Edit Order
+                </button>
+            </div>
+            <div>
+                <button ion-button round [disabled]="disablePlaceOrder()" (click)="placeOrder()">
+                    <ion-spinner class="order-spinner" *ngIf="showOrderSpinner"></ion-spinner>
+                    <ng-container *ngIf="!showOrderSpinner">
+                        Place Order
+                    </ng-container>
+                </button>
+            </div>
+        </div>
+
+        <p style="color: gray; font-size: 0.9em; padding: 15px; text-align: justify; text-justify: inter-word;">
+        You will receive notification once your order is accepted by store then you have to confirm order by
+        checking price & availability of item(s) set by store. If you do not agree with pricing & availability of item(s) you can cancel the order.
+        </p>
+
+    </ng-container>
+    <ng-container *ngIf="isOrderPosted">
+        <div class="order-posted-div">
+            <ion-icon name="checkmark-circle-outline" class="order-success-icon"></ion-icon>
+            <ion-label class="order-success-text-1">
+                Your order has been sent successfully.
+            </ion-label>
+            <ion-label class="order-success-text-2">
+                Sit back and relax we will notify you soon.
+            </ion-label>
+            <ion-label class="order-success-text-3">
+                Track your order in "Recent orders".
+            </ion-label>
+            <img logo src="../../../assets/imgs/orderlifecycle.png" style="width: 90vw !important; margin-top: 10px;"/>
+        </div>
+    </ng-container>
+
+</ion-content>

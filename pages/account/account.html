@@ -1,0 +1,160 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title color="fullWhite">{{title}}</ion-title>
+    <!-- <ion-buttons end *ngIf="title === 'Account'">
+      <button ion-button icon-only color="fullWhite" (click)="edit()">
+        <ion-icon name="md-create" style="font-size: 1.4em !important;"></ion-icon>
+      </button>
+    </ion-buttons> -->
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ng-container *ngIf="!showEditProfile">
+
+    <ion-list>
+      <!-- <ion-item-sliding *ngIf="userProvider.user.displayName">
+        <button ion-item icon-start>
+          <ion-icon name="contact" color="primary"></ion-icon>
+          <span class="account-span">{{userProvider.user.displayName}}</span>
+        </button>
+      </ion-item-sliding>
+
+      <ion-item-sliding *ngIf="userProvider.user.email">
+        <button ion-item icon-start>
+          <ion-icon name="mail" color="primary"></ion-icon>
+          <span class="account-span">{{userProvider.user.email}}</span>
+        </button>
+      </ion-item-sliding>
+
+      <ion-item-sliding *ngIf="userProvider.userDoc.phoneNumber">
+        <button ion-item icon-start>
+          <ion-icon name="call" color="primary"></ion-icon>
+          <span class="account-span">{{userProvider.userDoc.phoneNumber}}</span>
+        </button>
+      </ion-item-sliding>
+      <ion-item-sliding *ngIf="userProvider.userDoc.address">
+        <button ion-item icon-start>
+          <ion-icon name="home" color="primary"></ion-icon>
+          <span class="account-span">{{userProvider.userDoc.address}}</span>
+        </button>
+      </ion-item-sliding> -->
+
+      <ion-item-sliding>
+        <button ion-item icon-start (click)="edit()">
+          <ion-icon class="left-icon" name="contact" color="primary"></ion-icon>
+          <span class="account-span">Edit Profile Details</span>
+        </button>
+      </ion-item-sliding>
+
+
+      <ion-item-sliding>
+        <button ion-item icon-start (click)="requestLocation()">
+          <ion-icon class="left-icon" name="pin" color="primary"></ion-icon>
+          <span class="account-span">Change Location</span>
+        </button>
+      </ion-item-sliding>
+
+      <ion-item-sliding>
+        <button ion-item icon-start (click)="showFaqPage()">
+          <ion-icon class="left-icon" name="help" color="primary"></ion-icon>
+          <span class="account-span">Frequently Asked Questions</span>
+        </button>
+      </ion-item-sliding>
+
+      <ion-item-sliding>
+        <button ion-item icon-start (click)="feedback()">
+          <ion-icon class="left-icon" name="chatbubbles" color="primary"></ion-icon>
+          <span class="account-span">Write Feedback</span>
+        </button>
+      </ion-item-sliding>
+
+      <ion-item-sliding>
+        <button ion-item icon-start (click)="share()">
+          <ion-icon class="left-icon" name="share" color="primary"></ion-icon>
+          <span class="account-span">Share with Friends</span>
+        </button>
+      </ion-item-sliding>
+
+      <ion-item-sliding>
+        <button ion-item icon-start (click)="showAboutPage()">
+          <ion-icon class="left-icon" name="information-circle" color="primary"></ion-icon>
+          <span class="account-span">About Us</span>
+        </button>
+      </ion-item-sliding>
+
+      <ion-item-sliding>
+        <button ion-item icon-start (click)="presentLogoutConfirm()">
+          <ion-icon class="left-icon" name="log-out" color="primary"></ion-icon>
+          <span class="account-span">Logout</span>
+        </button>
+      </ion-item-sliding>
+
+      <!-- <ion-item style="text-align:center;" (click)="requestLocation()">
+        <button ion-button clear style="font-size: 0.8em;">Change Location</button>
+      </ion-item> -->
+
+      <!-- <ion-item style="text-align:center;" (click)="showFaqPage()">
+        <button ion-button clear style="font-size: 0.8em;">Frequently Asked Questions</button>
+      </ion-item>
+
+      <ion-item style="text-align:center;" (click)="feedback()">
+        <button ion-button clear style="font-size: 0.8em;">Write Feedback</button>
+      </ion-item>      
+
+
+      <ion-item style="text-align:center;" (click)="showAboutPage()">
+        <button ion-button clear style="font-size: 0.8em;">About Us</button>
+      </ion-item>
+
+      <ion-item style="text-align:center;" (click)="presentLogoutConfirm()">
+        <button ion-button clear style="font-size: 0.8em;">Logout</button>
+      </ion-item> -->
+
+    </ion-list>
+
+    <ion-item style="text-align:center;">
+      <ion-label style="font-size: 0.9em !important; color: #a31545;">
+        AnviGo 1.0.1
+      </ion-label>
+    </ion-item>
+
+    <ion-item style="text-align:center;">
+      <ion-label style="font-size: 0.9em !important; color: gray;">
+        Designed in India made for the World
+      </ion-label>
+    </ion-item>
+
+  </ng-container>
+
+  <ng-container *ngIf="showEditProfile">
+    <ion-item>
+      <ion-label color="primary">Name</ion-label>
+      <ion-input color="secondary" value="{{userProvider.user.displayName}}" [(ngModel)]="userProvider.user.displayName"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Email</ion-label>
+      <ion-input value="{{userProvider.user.email}}" [disabled]="true" [(ngModel)]="userProvider.user.email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Phone</ion-label>
+      <ion-input value="{{userProvider.userDoc.phoneNumber}}" [(ngModel)]="userProvider.userDoc.phoneNumber"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary">Address</ion-label>
+      <ion-input value="{{userProvider.userDoc.address}}" [(ngModel)]="userProvider.userDoc.address"></ion-input>
+    </ion-item>
+    <div style="text-align: center; margin-top: 10px;">
+      <button ion-button round (click)="save()" [disabled]="updateBtnState()">
+        <ion-spinner *ngIf="showSpinner"></ion-spinner>
+        <span *ngIf="!showSpinner">Update</span>
+      </button>
+    </div>
+
+
+  </ng-container>
+
+</ion-content>

@@ -1,0 +1,54 @@
+page-account {
+    .text-input-md{
+        color: gray;
+    }
+    // .item-md{
+    //     font-size: 1.1em !important;
+    // }
+
+    .left-icon{
+        font-size: 1.1em !important;
+        margin-top: 5px !important;
+    }
+
+    ion-spinner {
+        * {
+        stroke: white !important;
+        }
+        &.spinner-circles circle,
+        &.spinner-bubbles circle,
+        &.spinner-dots circle {
+        fill: white !important;
+        }
+      }
+
+    .loading-spinner{
+        margin-top: 36vh;
+        text-align: center;
+    }
+
+    .loading-text{
+        color: gray; 
+        font-size: 0.9em;
+    }
+
+    // .back-button-md{
+    //     margin: 0px 0px !important;
+    //     min-width: 30px !important;
+    // }
+
+    // .toolbar-md{
+    //     min-height: 8.5vh !important;
+    // }
+
+    // .toolbar-title-md{
+    //     padding: 0px 4px !important;
+    //     font-size: 1.8rem !important;
+    //     font-weight: 0 !important;
+    // }
+    .account-span{
+        white-space: normal !important;
+        //font-size: 0.9em !important; 
+        color: gray;
+    }
+}

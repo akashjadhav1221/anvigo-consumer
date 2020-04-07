@@ -1,0 +1,31 @@
+create-grocery-list{
+    .col{
+        padding-left: 0px !important;
+    }
+    [icon-only] ion-icon{
+        font-size: 1em !important;
+    }
+    .input-md[clearInput] .text-input{
+        padding-right: 0px !important;
+    }
+    .card-content-md{
+        padding-top: 0px !important;
+        padding-bottom: 0px !important;
+        padding-right: 5px !important;
+        padding-left: 5px !important;
+    }
+
+    .add-item-div{
+        text-align:center !important; 
+        margin-top: 20px;
+        margin-bottom: 70px;
+    }
+    .invalid-item{
+        background-color: lightgray;
+    }
+
+    .item-inner, ion-item {
+        border-bottom-color: transparent !important;
+        box-shadow: none !important;
+      }
+}

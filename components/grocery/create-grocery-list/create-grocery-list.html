@@ -1,0 +1,63 @@
+<ion-content>
+    <ion-fab bottom right>
+        <button ion-fab (tap)="validate()" [disabled]="cartProvider.groceryList.length === 0 || cartProvider.groceryList.length === 1 
+        && cartProvider.groceryList[cartProvider.groceryList.length - 1].name.trim() === ''">
+            <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+    </ion-fab>
+    <ng-container *ngIf="cartProvider.groceryList && cartProvider.groceryList.length > 0">
+        <ion-card *ngFor="let item of cartProvider.groceryList; let i = index;">
+            <ion-card-content>
+                <ion-row>
+                    <!-- <ion-col col-1>
+                                <button ion-button icon-only clear>
+                                    <ion-icon name="close"></ion-icon>
+                                </button>
+                            </ion-col> -->
+                    <ion-col col-9>
+                        <ion-item>
+                        <ion-input placeholder="Item" clearInput [(ngModel)]="item.name" 
+                        (ngModelChange)="inputChange($event, i)" 
+                        style="color: black !important;"
+                        (keyup.enter)="cartProvider.addItem()" autofocus></ion-input>
+                    </ion-item>
+                    </ion-col>
+                    <ion-col col-1>
+                        <button ion-button icon-only clear (click)="decrement(item, i)">
+                            <ion-icon name="remove"></ion-icon>
+                        </button>
+                    </ion-col>
+                    <ion-col col-1>
+                        <div style="text-align: center !important;">
+                            <ion-label style="margin-right: 0px !important;">{{item.quantity}}</ion-label>
+                        </div>
+                    </ion-col>
+                    <ion-col col-1>
+                        <button ion-button icon-only clear (click)="increment(item, i)">
+                            <ion-icon name="add"></ion-icon>
+                        </button>
+                    </ion-col>
+                </ion-row>
+            </ion-card-content>
+        </ion-card>
+    </ng-container>
+
+    <div class="add-item-div">
+        <!-- <ion-label *ngIf="cartProvider.groceryList && cartProvider.groceryList.length" style="color: gray;">Item
+            example: Sugar 1kg</ion-label> -->
+        <button ion-button round (click)="cartProvider.addItem()">Add Item</button>
+        <ion-label *ngIf="cartProvider.groceryList && cartProvider.groceryList.length" 
+        style="color: gray; font-size: 0.9em;">
+        Price & availability of item(s) will be set by store.</ion-label>
+    </div>
+
+    <ion-list *ngIf="matchedItems && matchedItems.length" style="margin-top: -10vh; margin-bottom: 75vh;">
+        <ion-list-header>
+            Suggestions
+          </ion-list-header>
+        <button ion-item *ngFor="let item of matchedItems" (click)="itemSelected(item)" style="color: gray;">
+            {{ item }}
+        </button>
+    </ion-list>
+
+</ion-content>

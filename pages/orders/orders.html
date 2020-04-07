@@ -1,0 +1,18 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title color="fullWhite">{{title}}</ion-title>
+    <!-- <ion-buttons end>
+      <button ion-button icon-only color="fullWhite">
+        <ion-icon name="cart" style="font-size: 1.4em !important;"></ion-icon>
+      </button>
+    </ion-buttons> -->
+  </ion-navbar>
+
+</ion-header>
+<ion-content>
+  <order-list *ngIf="component === 'order-list'" (onOrderSelected)="onOrderSelected($event)"></order-list>
+  <order-details *ngIf="component === 'order-details'" [order]="order" 
+  (onShowList)="onShowList($event)" [itemListVisible]="itemListVisible"
+  (orderCancel)="cancelOrder($event)" (orderConfirm)="orderConfirm($event)"></order-details>
+</ion-content>

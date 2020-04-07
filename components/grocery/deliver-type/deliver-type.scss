@@ -1,0 +1,48 @@
+deliver-type{
+    .btn-div{
+        text-align: center;
+        margin-top: 5vh;
+        margin-bottom: 20px;
+    }
+    .fulfill-text{
+        color: gray !important; 
+        font-size: 0.8em !important;
+    }
+    .store-name-text{
+        color: #a31545; 
+        font-size: 1em !important; 
+        margin-top: -5px;
+    }
+    .order-spinner{
+        * {
+            stroke: #FFFFFF !important;
+            }
+            &.spinner-circles circle,
+            &.spinner-bubbles circle,
+            &.spinner-dots circle {
+            fill: #FFFFFF !important;
+            }
+    }   
+    .order-posted-div{
+        margin-top: 15vh !important;
+        text-align: center;
+    }
+    .order-success-icon{
+        color:  green;
+        font-size: 5em;
+    }
+    .order-success-text-1{
+        color: #a31545; 
+        font-size: 1.2em;
+        font-weight: 700;
+    }
+    .order-success-text-2{
+        color: #a31545; 
+        font-size: 1em;
+        margin-top: -5px !important;
+    }
+    .order-success-text-3{
+        color: #a31545; 
+        font-size: 0.9em;
+    }
+}

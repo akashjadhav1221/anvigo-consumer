@@ -1,0 +1,26 @@
+order-details{
+    h2{
+        color: #a31545 !important;
+    }
+    p{
+        color: gray !important;
+    }
+    .action-btn{
+        text-align: center; 
+        margin-top: 10px !important; 
+        bottom: 0; 
+        margin: 0 !important;
+        position: sticky !important;
+    }
+    .grid{
+        padding: 0 !important;
+        background-color: #a31545;
+        position: sticky !important;
+        bottom: 0; 
+        margin: 0 !important;
+    }
+    // .button-md{
+    //     margin: 0 !important;
+    //     padding: 0 !important;
+    // }
+}

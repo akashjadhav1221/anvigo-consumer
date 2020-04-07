@@ -1,0 +1,29 @@
+page-location {
+
+    .area{
+        //background-color: white; 
+        color: #E91E63;
+        font-size: 1em;
+    }
+
+    ion-spinner {
+        * {
+        stroke: #a31545 !important;
+        }
+        &.spinner-circles circle,
+        &.spinner-bubbles circle,
+        &.spinner-dots circle {
+        fill: #a31545 !important;
+        }
+      }
+
+    .loading-spinner{
+        margin-top: 36vh;
+        text-align: center;
+    }
+
+    .loading-text{
+        color: gray; 
+        font-size: 0.9em;
+    }
+}

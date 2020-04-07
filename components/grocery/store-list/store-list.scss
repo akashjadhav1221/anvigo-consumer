@@ -1,0 +1,36 @@
+store-list {
+    .area{
+        //background-color: white; 
+        color: #a31545;
+        font-size: 1em;
+    }
+
+    ion-spinner {
+        * {
+        stroke: #a31545 !important;
+        }
+        &.spinner-circles circle,
+        &.spinner-bubbles circle,
+        &.spinner-dots circle {
+        fill: #a31545 !important;
+        }
+      }
+
+    .loading-spinner{
+        margin-top: 36vh;
+        text-align: center;
+    }
+
+    .loading-text{
+        color: gray; 
+        font-size: 0.9em;
+    }
+    .pagination-div{
+        text-align: center !important;
+        margin-top: 3vh !important;
+        margin-left: -10px;
+    }
+    .pagination-btn{
+        font-size: 0.9em;
+    }
+}

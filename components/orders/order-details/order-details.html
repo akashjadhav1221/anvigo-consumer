@@ -1,0 +1,126 @@
+<ion-list *ngIf="!showList">
+    <ion-item *ngIf="order.delivery.time && order.state && order.state != 'Delivered'">
+        <h2 *ngIf="order.delivery.method === 'Home Delivery'">Your order will be delivered on</h2>
+        <h2 *ngIf="order.delivery.method === 'Self Pickup'">Pick your order on</h2>
+        <p>{{order.delivery.time | date : 'medium'}}</p>
+    </ion-item>
+    <ion-item>
+        <h2 *ngIf="order.business.name">Store Name</h2>
+        <p>{{order.business.name}}</p>
+    </ion-item>
+    <ion-item>
+        <h2 *ngIf="order.business.id">Store Id</h2>
+        <p>{{order.business.id}}</p>
+    </ion-item>
+    <ion-item (click)="showItemList()">
+        <h2>{{order.items.length}} Item(s)</h2>
+        <p>Tap to view the list</p>
+    </ion-item>
+    <ion-item>
+        <h2>Order Status</h2>
+        <p *ngIf="order.state" style="color: gray;">{{commonProvider.getOrderState(order.state)}}</p>
+    </ion-item>
+    <ion-item *ngIf="order.remark">
+        <h2>Remark</h2>
+        <p style="color: gray;">{{order.remark}}</p>
+    </ion-item>
+    <ion-item>
+        <h2>Delivery Method</h2>
+        <p>{{order.delivery.method}}</p>
+    </ion-item>
+    <ion-item *ngIf="order.delivery.method === 'Home Delivery'">
+        <h2>Delivery Address</h2>
+        <p style="white-space: normal !important;">{{order.user.address}}</p>
+    </ion-item>
+    <ion-item *ngIf="order.business.contactNumber" (click)="makeCall(order.business.contactNumber)">
+        <h2>Contact Number</h2>
+        <p style="white-space: normal !important;">{{order.business.contactNumber}}</p>
+    </ion-item>
+    <ion-item *ngIf="order.business.email">
+        <h2>Email</h2>
+        <p style="white-space: normal !important;">{{order.business.email}}</p>
+    </ion-item>
+    <ng-container *ngIf="order.state != 'Approval Pending'">
+        <ion-item *ngIf="order.payment.method">
+            <h2>Payment Method</h2>
+            <p *ngIf="order.amount.total">{{order.payment.method}}</p>
+        </ion-item>
+        <ion-item>
+            <h2>Total</h2>
+            <p *ngIf="order.amount.total">₹ {{order.amount.total}}</p>
+            <p *ngIf="!order.amount.total">₹ ---</p>
+        </ion-item>
+        <ion-item *ngIf="order.delivery.charges">
+            <h2>Delivery Charges <small>*Included in Total</small></h2>
+            <p>₹ {{order.delivery.charges}}</p>
+        </ion-item>
+        <ion-item>
+            <h2>Paid</h2>
+            <p *ngIf="order.amount.paid">₹ {{order.amount.paid}}</p>
+            <p *ngIf="!order.amount.paid">₹ ---</p>
+        </ion-item>
+        <ion-item>
+            <h2>Remaining</h2>
+            <p *ngIf="order.amount.remaining">₹ {{order.amount.remaining}}</p>
+            <p *ngIf="!order.amount.remaining">₹ ---</p>
+        </ion-item>
+    </ng-container>
+    <ion-item>
+        <h2>Date & Time</h2>
+        <p *ngIf="order.timestamps.createdAt">Order Placed: {{order.timestamps.createdAt.seconds * 1000 | date :
+            'medium'}}</p>
+        <p *ngIf="order.timestamps.acceptedAt">Order Accepted: {{order.timestamps.acceptedAt.seconds * 1000 | date :
+            'medium'}}</p>
+        <p *ngIf="order.timestamps.canceledAt">Order Canceled: {{order.timestamps.canceledAt.seconds * 1000 | date :
+            'medium'}}</p>
+        <p *ngIf="order.timestamps.confirmedAt">Order Confirmed: {{order.timestamps.confirmedAt.seconds * 1000 | date :
+            'medium'}}</p>
+        <p *ngIf="order.timestamps.packedAt">Order Packed: {{order.timestamps.packedAt.seconds * 1000 | date :
+            'medium'}}</p>
+        <p *ngIf="order.timestamps.deliveredAt">Order Delivered: {{order.timestamps.deliveredAt.seconds * 1000 | date :
+            'medium'}}</p>
+    </ion-item>
+
+
+    <div style="text-align: center; margin-top: 15px !important;">
+        <button ion-button round *ngIf="order.state === 'Accepted by store owner'" (click)="presentConfirmOrder()">Confirm
+            Order</button>
+        <button ion-button round *ngIf="order.state === 'Accepted by store owner' || order.state === 'Approval Pending'"
+            (click)="presentConfirm()">Cancel Order</button>
+    </div>
+
+</ion-list>
+
+<ion-list *ngIf="showList">
+    <ion-item *ngFor="let item of order.items">
+        <h2>{{item.name}}</h2>
+        <p *ngIf="item.quantity"><strong>Quantity:</strong> {{item.quantity}}</p>
+        <p *ngIf="item.price"><strong>Price:</strong> ₹ {{item.price}}</p>
+        <p *ngIf="item.status"><strong>Status:</strong> {{item.status}}</p>
+        <p *ngIf="item.remark" style="white-space: normal !important;"><strong>Remark:</strong> {{item.remark}}</p>
+    </ion-item>
+    <div style="text-align: center; margin-top: 15px !important;">
+        <button ion-button round *ngIf="order.state === 'Accepted by store owner'" (click)="presentConfirmOrder()">Confirm
+            Order</button>
+        <button ion-button round *ngIf="order.state === 'Accepted by store owner' || order.state === 'Approval Pending'"
+            (click)="presentConfirm()">Cancel Order</button>
+    </div>
+</ion-list>
+
+
+
+
+
+
+<!-- <ion-footer no-shadow *ngIf="!showList">
+    <ion-grid>
+        <ion-row>
+            <ion-col *ngIf="order.state === 'Accepted by store owner'">
+                <button ion-button block (click)="presentConfirmOrder()">Confirm Order</button>
+            </ion-col>
+            <ion-col *ngIf="order.state === 'Accepted by store owner' || order.state === 'Approval Pending'">
+                <button ion-button block (click)="presentConfirm()">Cancel Order</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer> -->

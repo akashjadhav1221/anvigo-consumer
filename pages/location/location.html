@@ -1,0 +1,54 @@
+<ion-navbar>
+
+  <ion-title>Select your location</ion-title>
+
+</ion-navbar>
+
+
+
+<ion-content>
+
+  <div class="loading-spinner" *ngIf="showSpinner && !locationError">
+    <ion-spinner name="crescent"></ion-spinner>
+    <ion-label class="loading-text">{{loadingMsg}}</ion-label>
+    <ion-label class="loading-text">Sit back & relax. This might take some time.</ion-label>
+  </div>
+
+
+  <!-- <ion-searchbar *ngIf="!showSpinner && areas && areas.length > 0" [(ngModel)]="query" [showCancelButton]="shouldShowCancel" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
+  </ion-searchbar>
+
+  
+
+  <ion-list *ngIf="!showSpinner && !showSearchResults && areas && areas.length > 0">
+    <button ion-item (click)="areaSelected(area)" *ngFor="let area of areas">
+      <h2 class="area">{{area.name}}
+        <small style="color: gray;"> {{area.city}}</small>
+      </h2>
+    </button>
+  </ion-list>
+
+  <ng-container *ngIf="searchResults && searchResults.length > 0">
+      <ion-list *ngIf="!showSpinner && showSearchResults && areas && areas.length > 0">
+          <button ion-item (click)="areaSelected(result)" *ngFor="let result of searchResults">
+            <h2 class="area">{{result.name}}
+              <small style="color: gray;"> {{result.city}}</small>
+            </h2>
+          </button>
+        </ion-list>
+  </ng-container> -->
+
+  <ng-container *ngIf="!showSpineer && locationError">
+    <div class="loading-spinner">
+      <ion-label class="loading-text">
+        Turn on GPS & Allow Location Accurracy.
+      </ion-label>
+      <ion-label (click)="openSettings()" style="color: #a31545;">
+        Open Settings
+      </ion-label>
+
+      <button ion-button round (click)="tryAgain()">Try Again</button>
+    </div>
+  </ng-container>
+
+</ion-content>

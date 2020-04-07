@@ -1,0 +1,83 @@
+page-home {
+    ion-card {
+       border-radius: 5px !important;
+    }
+    .greeting-title{
+        font-size: 1.2em;
+        color: white;
+        padding-top: 5px !important;
+    }
+    .greeting-content{
+        font-size: 1em;
+        color:white !important;
+        margin-top: -15px !important;
+    }
+    .card-title{
+        font-size: 1em;
+        color: #a31545;
+    }
+    .card-content{
+        font-size: 0.8em;
+        color:gray;
+        margin-top: -15px !important;
+    }
+
+    .action-card{
+        border-radius: 0px !important;
+    }
+
+    .action-icon{
+        margin-top: 3.5vh;
+        margin-left: 1.5vw;
+        font-size: 1.4em;
+        color: gray !important;
+    }
+
+    .recent-orders-text{
+        font-size: 0.9em !important;
+        color: gray;
+    }
+
+    .bottom-div {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #FFFFFF;
+    }
+    .bottom-div-icons{
+        color: gray;
+        padding-right: 10px;
+    }
+    .bottom-div-btns{
+        text-transform: none !important;
+        color: #E91E63;
+        font-size: 1em !important;
+    }
+
+   .spinner-div{
+    text-align: center;
+    margin-top: 7vh !important;
+   }
+   .all-orders-btn{
+    //text-transform: none !important;
+    color: gray;
+   }
+
+   ion-spinner {
+    * {
+    stroke: #a31545 !important;
+    }
+    &.spinner-circles circle,
+    &.spinner-bubbles circle,
+    &.spinner-dots circle {
+    fill: #a31545 !important;
+    }
+  }
+
+  .account-icon-btn{
+      color: white !important;
+      font-size: 0.8em !important;
+      margin-top: 1vh !important;
+  }
+
+}

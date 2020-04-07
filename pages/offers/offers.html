@@ -1,0 +1,177 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title color="fullWhite">Offers Nearby</ion-title>
+    <ion-buttons end *ngIf="component === 'offers-list'">
+
+      <!-- <button ion-button icon-only color="fullWhite" (click)="requestLocation()">
+        <ion-icon name="pin" style="font-size: 1.4em !important;"></ion-icon>
+      </button> -->
+
+      <button ion-button icon-only color="fullWhite" (click)="showSearch()">
+        <ion-icon name="search" style="font-size: 1.4em !important;"></ion-icon>
+      </button>
+
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab bottom right *ngIf="component === 'offer-details' || component === 'search-offer-details' && showOffer && showOffer.business && showOffer.business.contactNumber">
+    <button ion-fab (click)="makeCall(showOffer.business.contactNumber)">
+      <ion-icon name="call"></ion-icon>
+    </button>
+  </ion-fab>
+  <ng-container *ngIf="component === 'offers-list'">
+    <div class="loading-spinner" *ngIf="showSpinner">
+      <ion-spinner name="crescent"></ion-spinner>
+      <ion-label class="loading-text">{{loadingMsg}}</ion-label>
+    </div>
+
+    <ng-container *ngIf="!showSpinner && offers.length">
+
+      <ion-card *ngFor="let offer of offers" class="offer-card" (click)="offerSelected(offer)">
+
+        <ion-item>
+          <ion-avatar item-start *ngIf="offer.business.logo">
+          </ion-avatar>
+          <h2 style="color: #a31545 !important;">{{offer.business.name}}</h2>
+          <p>{{offer.business.address}}</p>
+          <p *ngIf="offer.queryMetadata.distance">{{offer.queryMetadata.distance | number: '1.2-2'}} km</p>
+        </ion-item>
+
+        <div [ngStyle]="{'background-color':offer.color}" class="offer-background">
+          <h3 class="offer-title">{{offer.title}}</h3>
+        </div>
+
+        <ion-card-content>
+          <p style="color: gray !important;">{{offer.description}}</p>
+          <p style="color: gray !important;">{{offer.timestamps.createdAt.seconds * 1000 | date: 'medium'}}</p>
+        </ion-card-content>
+      </ion-card>
+
+      <div style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
+        <ion-spinner name="crescent" *ngIf="showPaginationSpinner"></ion-spinner>
+        <button ion-button outline style="color: gray !important; border-color: gray;" (click)="updateRadius()" *ngIf="!showPaginationSpinner && radiusValue <= 21">SHOW
+          OFFERS WITHIN {{ radiusValue + 3}} KM</button>
+      </div>
+    </ng-container>
+
+    <div class="loading-spinner" *ngIf="!showSpinner && !offers.length">
+      <ion-spinner name="crescent" *ngIf="showPaginationSpinner"></ion-spinner>
+      <ion-label class="loading-text" *ngIf="!showPaginationSpinner">NO OFFERS</ion-label>
+    </div>
+    <div style="text-align: center;" *ngIf="!showSpinner && !offers.length">
+      <button ion-button outline (click)="updateRadius()" style="color: gray !important; border-color: gray;"
+      *ngIf="!showPaginationSpinner && radiusValue + 3 <= 21">
+        SHOW OFFERS WITHIN {{ radiusValue + 3}} KM
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="component === 'offer-details'">
+    <div class="offer-profile" [style.background-color]="showOffer.color" *ngIf="showOffer.color">
+    </div>
+
+    <div class="offer-detail" padding>
+
+      <h2 style="margin-top: -7.2rem !important; color: white; font-size: 1.3em;" *ngIf="showOffer.title">{{showOffer.title}}</h2>
+
+      <ion-label style="color: white; margin-top: 7px !important;">{{showOffer.type === 'discount-offer' ? 'Discount' :
+        'Loyalty' }} Offer
+      </ion-label>
+
+      <P style="font-size: 1.2em; color: #a31545;" *ngIf="showOffer.description">Description:</P>
+      <p style="font-size: 1em; color: gray; margin-top: -10px;">{{showOffer.description}}</p>
+      <P style="font-size: 1em; color: gray;" *ngIf="showOffer.description">{{showOffer.timestamps.createdAt.seconds *
+        1000 | date: 'medium'}}</P>
+      <br>
+
+      <P style="font-size: 1.2em; color: #a31545;" *ngIf="showOffer.business">Posted by:</P>
+      <p style="font-size: 1.1em; color: gray;" *ngIf="showOffer.business.name">{{showOffer.business.name}}</p>
+      <p style="font-size: 1em; color: gray;" *ngIf="showOffer.business.address">{{showOffer.business.address}}</p>
+      <p style="font-size: 1em; color: gray;" *ngIf="showOffer.queryMetadata.distance">{{showOffer.queryMetadata.distance
+        | number: '1.2-2'}} km</p>
+      <p style="font-size: 1em; color: gray;" *ngIf="showOffer.spamCount">{{showOffer.spamCount}} Peoples have reported
+        this offer as spam.</p>
+
+      <P style="font-size: 1.2em; color: #a31545;" *ngIf="showOffer.business.email">Email:</P>
+      <p style="font-size: 1em; color: gray;" *ngIf="showOffer.business.email">{{showOffer.business.email}}</p>
+
+    </div>
+
+  </ng-container>
+
+  <ng-container *ngIf="component === 'search'">
+    <ion-searchbar placeholder="Search Offers" [(ngModel)]="query" [showCancelButton]="shouldShowCancel" (keyup.enter)="onInput($event)"
+      (ngModelChange)="queryChanged()" (ionCancel)="onCancel($event)">
+    </ion-searchbar>
+
+    <div class="loading-spinner" *ngIf="showSearchSpinner">
+      <ion-spinner name="crescent"></ion-spinner>
+      <ion-label class="loading-text">{{loadingMsg}}</ion-label>
+    </div>
+
+    <ng-container *ngIf="!showSearchSpinner && searchResults && searchResults.length">
+      <ion-card *ngFor="let offer of searchResults" class="offer-card" (click)="searchOfferSelected(offer)">
+
+        <ion-item>
+          <ion-avatar item-start *ngIf="offer.business.logo">
+          </ion-avatar>
+          <h2 style="color: #a31545 !important;">{{offer.business.name}}</h2>
+          <p style="color: gray !important;">{{offer.business.address}}</p>
+        </ion-item>
+
+        <div [ngStyle]="{'background-color':offer.color}" class="offer-background">
+          <h3 class="offer-title">{{offer.title}}</h3>
+        </div>
+
+        <ion-card-content>
+          <p style="color: gray !important;">{{offer.description}}</p>
+          <p style="color: gray !important;">{{offer.timestamps.createdAt.seconds * 1000 | date: 'medium'}}</p>
+        </ion-card-content>
+      </ion-card>
+
+      <div style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
+        <ion-spinner name="crescent" *ngIf="showPaginationSpinner"></ion-spinner>
+        <button ion-button outline style="color:gray; border-color: gray;"  (click)="paginate()" *ngIf="showLoadMoreBtn">SHOW MORE</button>
+      </div>
+
+    </ng-container>
+
+    <div class="loading-spinner" *ngIf="showNoResultsText">
+      <ion-label class="loading-text">No Results Found</ion-label>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="component === 'search-offer-details'">
+    <div class="offer-profile" [style.background-color]="showOffer.color" *ngIf="showOffer.color">
+    </div>
+
+    <div class="offer-detail" padding>
+
+      <h2 style="margin-top: -7.2rem !important; color: white; font-size: 1.3em;" *ngIf="showOffer.title">{{showOffer.title}}</h2>
+
+      <ion-label style="color: white; margin-top: 7px !important;">{{showOffer.type === 'discount-offer' ? 'Discount' :
+        'Loyalty' }} Offer
+      </ion-label>
+
+      <P style="font-size: 1.2em; color: #a31545;" *ngIf="showOffer.description">Description:</P>
+      <p style="font-size: 1em; color: gray; margin-top: -10px;">{{showOffer.description}}</p>
+      <P style="font-size: 1em; color: gray;" *ngIf="showOffer.description">{{showOffer.timestamps.createdAt.seconds *
+        1000 | date: 'medium'}}</P>
+      <br>
+
+      <P style="font-size: 1.2em; color: #a31545;" *ngIf="showOffer.business">Posted by:</P>
+      <p style="font-size: 1.1em; color: gray;" *ngIf="showOffer.business.name">{{showOffer.business.name}}</p>
+      <p style="font-size: 1em; color: gray;" *ngIf="showOffer.business.address">{{showOffer.business.address}}</p>
+      <p style="font-size: 1em; color: gray;" *ngIf="showOffer.spamCount">{{showOffer.spamCount}} Peoples have reported
+        this offer as spam.</p>
+
+      <P style="font-size: 1.2em; color: #a31545;" *ngIf="showOffer.business.email">Email:</P>
+      <p style="font-size: 1em; color: gray;" *ngIf="showOffer.business.email">{{showOffer.business.email}}</p>
+
+    </div>
+
+  </ng-container>
+</ion-content>

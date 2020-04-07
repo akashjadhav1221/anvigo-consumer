@@ -1,0 +1,22 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title color="fullWhite">{{title}}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only color="fullWhite" *ngIf="component === 'create-grocery-list' || component === 'deliver-type' && !orderPosted">
+        <ion-icon name="cart" style="font-size: 1.4em !important;"></ion-icon>({{cartProvider.groceryList.length}})
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+
+  <store-list *ngIf="component === 'store-list'" (onStoreSelection)="onStoreSelection($event)"></store-list>
+  <create-grocery-list *ngIf="component === 'create-grocery-list'" 
+  [businessId]="selectedStore.businessId"
+  (onGroceryListCreation)="onGroceryListCreation($event)"></create-grocery-list>
+  <deliver-type [selectedStore]="selectedStore" (onEditListClick)="showEditList($event)" (onOrderPost)="onOrderPost($event)" *ngIf="component === 'deliver-type'"></deliver-type>
+
+</ion-content>

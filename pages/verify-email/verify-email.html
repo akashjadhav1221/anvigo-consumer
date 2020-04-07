@@ -1,0 +1,24 @@
+<ion-content padding>
+
+  <div style="text-align: center; margin-top: 35vh;">
+      <h3 style="color: #a31545 !important;">Verify your email address</h3>
+      <p>An email with verification link has been sent to {{userProvider.user.email}}</p>
+      <button ion-button outline style="color: gray; border-color: gray;" (click)="resend()" [disabled]="showSpinner">
+        <ion-spinner *ngIf="showSpinner">
+        </ion-spinner>
+        <ng-container *ngIf="!showSpinner">
+          Resend Verification Link
+        </ng-container>
+      </button>
+      <p style="margin-top: 2vh;"></p>
+
+      <button ion-button outline style="color: gray; border-color: gray;" 
+      (click)="refresh()" [disabled]="showSpinner">
+          Refresh
+      </button>
+
+      <p style="margin-top: 2vh; color: gray;" (click)="changeAccount()">Change account</p>
+     
+  </div>
+  
+</ion-content>

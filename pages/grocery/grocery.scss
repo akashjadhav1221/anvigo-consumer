@@ -1,0 +1,53 @@
+page-grocery {
+    ion-spinner {
+        * {
+        stroke: #a31545 !important;
+        }
+        &.spinner-circles circle,
+        &.spinner-bubbles circle,
+        &.spinner-dots circle {
+        fill: #a31545 !important;
+        }
+      }
+
+    .loading-spinner{
+        margin-top: 36vh;
+        text-align: center;
+    }
+
+    .loading-text{
+        color: gray; 
+        font-size: 0.9em;
+    }
+   
+    // .back-button-md{
+    //     margin: 0px 0px !important;
+    //     min-width: 30px !important;
+    // }
+
+    // .toolbar-md{
+    //     min-height: 8.5vh !important;
+    // }
+
+    // .toolbar-title-md{
+    //     padding: 0px 4px;
+    //     font-size: 1.8rem;
+    //     font-weight: 0;
+    // }
+
+    ion-card {
+        border-radius: 0px !important;
+        width: 100% !important;
+        margin: 0px !important;
+     }
+     .greeting-title{
+         font-size: 1.2em;
+         color: white;
+     }
+     .greeting-content{
+         font-size: 1em;
+         color:white !important;
+         margin-top: -15px !important;
+     }
+
+}

@@ -1,0 +1,61 @@
+<ion-content>
+
+    <ion-searchbar *ngIf="!showSpinner" placeholder="Search by store id" [(ngModel)]="query"
+        [showCancelButton]="shouldShowCancel" (keyup.enter)="onInput($event)" (ngModelChange)="queryChanged()"
+        (ionCancel)="onCancel($event)">
+    </ion-searchbar>
+
+    <div class="loading-spinner" *ngIf="showSpinner">
+        <ion-spinner name="crescent"></ion-spinner>
+        <ion-label class="loading-text">{{loadingMsg}}</ion-label>
+    </div>
+
+    <!-- <div class="loading-spinner" *ngIf="!showSpinner && callCompleted && stores && stores.length === 0">
+        <ion-label class="loading-text">No stores nearby</ion-label>
+    </div> -->
+
+    <ion-list *ngIf="!showSpinner && !showSearchResults && stores && stores.length > 0">
+        <button ion-item (click)="storeSelected(store)" *ngFor="let store of stores">
+            <h2 class="area">{{store.name}}</h2>
+
+            <p style="color: gray;">{{store.address}}</p>
+            <p style="color: gray;">{{store.queryMetadata.distance | number: '1.2-2'}} km</p>
+            <p style="color: gray;">Store Id: {{store.id}}</p>
+        </button>
+    </ion-list>
+
+    <div style="text-align: center; margin-top: 5vh;" *ngIf="showPaginationSpinner && !showSearchResults">
+        <ion-spinner name="crescent"></ion-spinner>
+    </div>
+
+    <div style="text-align: center; margin-top: 5vh;" *ngIf="!showSpinner && callCompleted && !showSearchResults">
+        <button ion-button outline (click)="updateRadius()" style="color: gray !important; border-color: gray;"
+        *ngIf="!showPaginationSpinner && radiusValue + 3 <= 25">
+            SHOW STORES WITHIN {{ radiusValue + 3}} KM
+        </button>
+    </div>
+
+    <ng-container *ngIf="!showSpinner && !showSearchResults && stores && !stores.length && !callCompleted">
+        <div class="loading-spinner">
+            <h2 class="loading-text">{{loadingMsg}}</h2>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="searchResults && searchResults.length > 0">
+        <ion-list>
+            <button ion-item (click)="storeSelected(result)" *ngFor="let result of searchResults">
+                <h2 class="area">{{result.name}}
+                    <!-- <small style="color: gray;"> {{result.city}}</small> -->
+                </h2>
+                <p style="color: gray;">{{result.address}}</p>
+            </button>
+        </ion-list>
+    </ng-container>
+
+    <ng-container *ngIf="showSearchResults && searchResults.length === 0">
+        <div class="loading-spinner">
+            <h2 class="loading-text">No results found!</h2>
+        </div>
+    </ng-container>
+
+</ion-content>
